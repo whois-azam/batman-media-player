@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/onboarding_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#10141A"
+    android:padding="24dp">
+
+    <!-- Top Branding & Step Indicator -->
+    <LinearLayout
+        android:id="@+id/onboarding_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/onboarding_logo"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:contentDescription="Batman Logo"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_bat_logo" />
+
+        <TextView
+            android:id="@+id/onboarding_step_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#3D9BE9"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:text="STEP 1 OF 3: WEBSITE SETUP" />
+    </LinearLayout>
+
+    <!-- Main Content Area: ViewFlipper -->
+    <ViewFlipper
+        android:id="@+id/onboarding_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/onboarding_nav_bar"
+        android:layout_below="@+id/onboarding_header">
+
+        <!-- ================= STEP 1: WEBSITE SETUP ================= -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Welcome to Batman"
+                    android:textColor="#F0F2F5"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Your entertainment, your way."
+                    android:textColor="#9AA4B2"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/input_website_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="28dp"
+                    android:background="#1E2530"
+                    android:hint="Enter the website link you want to open"
+                    android:inputType="textUri"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="https://archive.org/details/movies"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#637083"
+                    android:textSize="15sp" />
+
+                <!-- Preset Quick Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_preset_archive"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:background="#181E26"
+                        android:text="Internet Archive"
+                        android:textAllCaps="false"
+                        android:textColor="#3D9BE9"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_preset_publicdomain"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="#181E26"
+                        android:text="Public Domain Movies"
+                        android:textAllCaps="false"
+                        android:textColor="#9AA4B2"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_url_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="#E74C3C"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- ================= STEP 2: VIDEO PLAYER ENGINE ================= -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Choose Video Player"
+                    android:textColor="#F0F2F5"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Select how video streams open from websites"
+                    android:textColor="#9AA4B2"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical">
+
+                    <!-- Option 1: EXP PLAYER -->
+                    <LinearLayout
+                        android:id="@+id/card_player_exp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:background="#1B2430"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_player_exp_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="EXP PLAYER"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#26384C"
+                                android:paddingStart="8dp"
+                                android:paddingTop="3dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="3dp"
+                                android:text="RECOMMENDED"
+                                android:textColor="#3D9BE9"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txt_player_exp_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="Built on ExoPlayer architecture with smooth hardware acceleration, remote controls, customizable skip, and buffer-free streaming."
+                            android:textColor="#C2CDDB"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Option 2: Website Default Player -->
+                    <LinearLayout
+                        android:id="@+id/card_player_website"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:background="#151C24"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/txt_player_website_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Website Default Player"
+                            android:textColor="#9AA4B2"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_player_website_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="Plays video streams directly inside the webpage browser interface."
+                            android:textColor="#6C7A8E"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Websites will always load in their authentic look and layout. When a video starts playing, your chosen engine takes over."
+                    android:textColor="#6C7A8E"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- ================= STEP 3: PROFILE CREATION ================= -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Create Your Profile"
+                    android:textColor="#F0F2F5"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Choose your name and signature avatar"
+                    android:textColor="#9AA4B2"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/input_profile_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1E2530"
+                    android:hint="Enter your display name"
+                    android:inputType="textPersonName"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Batman"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#637083"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="SELECT AVATAR"
+                    android:textColor="#3D9BE9"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <!-- Grid of 8 Avatars (2 rows of 4) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_0"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_1"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_2"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_3"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_4"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_5"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_6"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+
+                    <com.batman.player.views.AvatarView
+                        android:id="@+id/avatar_7"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="6dp"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_selected_avatar_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Selected: Classic Bat"
+                    android:textColor="#F0F2F5"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- ================= STEP 3: PERSONALIZATION ================= -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Personalize Experience"
+                    android:textColor="#F0F2F5"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <!-- Theme Selection -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="CHOOSE THEME"
+                    android:textColor="#3D9BE9"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn_theme_midnight"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="#1E2530"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="16dp"
+                        android:text="●  Midnight Slate (Charcoal &amp; Cool Slate)"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/btn_theme_ocean"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="#14222B"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="16dp"
+                        android:text="○  Calm Ocean (Deep Blue &amp; Teal)"
+                        android:textAllCaps="false"
+                        android:textColor="#9AA4B2"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/btn_theme_forest"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="#16241E"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="16dp"
+                        android:text="○  Emerald Forest (Spruce &amp; Sage)"
+                        android:textAllCaps="false"
+                        android:textColor="#9AA4B2"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/btn_theme_amoled"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="#0A0A0A"
+                        android:gravity="center_vertical|start"
+                        android:paddingStart="16dp"
+                        android:text="○  Pure Black (AMOLED High Contrast)"
+                        android:textAllCaps="false"
+                        android:textColor="#9AA4B2"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- Accent Color Picker -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="ACCENT COLOR"
+                    android:textColor="#3D9BE9"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layout_accent_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- 6 Accent Color buttons created dynamically -->
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </ViewFlipper>
+
+    <!-- Bottom Navigation Bar (Back, Next/Finish) -->
+    <LinearLayout
+        android:id="@+id/onboarding_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_onboarding_back"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="#1E2530"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="#9AA4B2"
+            android:textSize="14sp"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btn_onboarding_next"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="2"
+            android:background="#3D9BE9"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>

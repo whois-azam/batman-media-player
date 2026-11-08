@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_height">52dp</dimen>
+    <dimen name="header_logo_size">32dp</dimen>
+    <dimen name="header_button_size">38dp</dimen>
+    <dimen name="header_button_padding">8dp</dimen>
+    
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_clock">18sp</dimen>
+    <dimen name="text_size_date">12sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_subtitle">12sp</dimen>
+    
+    <dimen name="corner_radius_small">6dp</dimen>
+    <dimen name="corner_radius_normal">10dp</dimen>
+    <dimen name="corner_radius_large">14dp</dimen>
+    
+    <dimen name="focus_border_width">2.5dp</dimen>
+</resources>

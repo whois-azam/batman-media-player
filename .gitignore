@@ -1,0 +1,39 @@
+# Build output and temporary directories
+BatmanApp/build/
+build/
+bin/
+gen/
+*.class
+*.dex
+*.idsig
+
+# Binary packages (built locally or generated via GitHub Actions releases)
+*.apk
+*.aab
+
+# External reference repositories and archives
+rea/
+SmartTube/
+*.zip
+
+# Local agent and skill caches
+.agents/
+skills-lock.json
+
+# Screenshots and debugging logs
+screen_*.png
+*.log
+
+# IDE & Editor files
+.idea/
+.gradle/
+.vscode/
+local.properties
+*.iml
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local secrets
+*.keystore.secret

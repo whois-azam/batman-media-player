@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.batman.tv'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.batman.tv"
+        minSdk 28
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        // Force 32-bit ARM compatibility for older TV chipsets (MT9255L/MT5862)
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    // Zero external dependencies needed; runs purely on native Android 9+ framework
+}

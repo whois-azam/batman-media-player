@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Midnight Slate (Default Theme) -->
+    <color name="midnight_bg">#10141A</color>
+    <color name="midnight_header">#181E26</color>
+    <color name="midnight_card">#1E2530</color>
+    <color name="midnight_accent">#4A6D8C</color>
+    <color name="midnight_accent_light">#628EB3</color>
+    <color name="midnight_focus">#5C8AB5</color>
+    
+    <!-- Calm Ocean Theme -->
+    <color name="ocean_bg">#0D161B</color>
+    <color name="ocean_header">#14222B</color>
+    <color name="ocean_card">#1B2E3A</color>
+    <color name="ocean_accent">#2B6E7F</color>
+    <color name="ocean_accent_light">#38A3A5</color>
+    <color name="ocean_focus">#38A3A5</color>
+
+    <!-- Forest Mist Theme -->
+    <color name="forest_bg">#0E1713</color>
+    <color name="forest_header">#16241E</color>
+    <color name="forest_card">#1E3029</color>
+    <color name="forest_accent">#34654F</color>
+    <color name="forest_accent_light">#4E876B</color>
+    <color name="forest_focus">#4E876B</color>
+
+    <!-- Lavender Dusk Theme -->
+    <color name="lavender_bg">#14121A</color>
+    <color name="lavender_header">#1E1B28</color>
+    <color name="lavender_card">#282436</color>
+    <color name="lavender_accent">#5E4E7A</color>
+    <color name="lavender_accent_light">#826FAD</color>
+    <color name="lavender_focus">#846EAD</color>
+
+    <!-- Warm Graphite Theme -->
+    <color name="graphite_bg">#161514</color>
+    <color name="graphite_header">#242220</color>
+    <color name="graphite_card">#302D2A</color>
+    <color name="graphite_accent">#705E44</color>
+    <color name="graphite_accent_light">#9C8462</color>
+    <color name="graphite_focus">#D79921</color>
+
+    <!-- Text & General UI -->
+    <color name="text_primary">#E6E8EC</color>
+    <color name="text_secondary">#8A94A6</color>
+    <color name="text_muted">#586274</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    
+    <!-- Dialog & Overlays -->
+    <color name="overlay_scrim">#B3000000</color>
+    <color name="dialog_bg">#1A202A</color>
+    <color name="item_unfocused">#141920</color>
+    <color name="item_focused">#2A3648</color>
+    <color name="item_selected">#344860</color>
+    <color name="border_subtle">#283240</color>
+    <color name="border_focus">#58A6FF</color>
+</resources>
