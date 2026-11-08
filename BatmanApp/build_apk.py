@@ -117,9 +117,19 @@ is_win = os.name == 'nt'
 exe_ext = ".exe" if is_win else ""
 
 sdk_root = os.environ.get("ANDROID_HOME") or os.environ.get("ANDROID_SDK_ROOT")
-if not sdk_root:
-    app_data = os.environ.get("USERPROFILE", "")
-    sdk_root = os.path.join(app_data, "AppData", "Local", "Android", "Sdk")
+if not sdk_root or not os.path.exists(sdk_root):
+    candidates = [
+        "/usr/local/lib/android/sdk",
+        os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local", "Android", "Sdk"),
+        os.path.expanduser("~/Android/Sdk"),
+    ]
+    for c in candidates:
+        if c and os.path.exists(c):
+            sdk_root = c
+            break
+
+if not sdk_root or not os.path.exists(sdk_root):
+    raise RuntimeError("Android SDK not found. Please set ANDROID_HOME or ANDROID_SDK_ROOT.")
 
 build_tools_dir = os.path.join(sdk_root, "build-tools")
 build_tools = os.path.join(build_tools_dir, "34.0.0")
@@ -144,15 +154,27 @@ d8_jar = os.path.join(build_tools, "lib", "d8.jar")
 apksigner_jar = os.path.join(build_tools, "lib", "apksigner.jar")
 zipalign_exe = os.path.join(build_tools, f"zipalign{exe_ext}")
 
+# Ensure executables have execute permissions on Linux/macOS
+if not is_win:
+    for tool_binary in [aapt2, zipalign_exe]:
+        if os.path.exists(tool_binary):
+            try:
+                os.chmod(tool_binary, os.stat(tool_binary).st_mode | 0o111)
+            except Exception:
+                pass
+
 java_home = os.environ.get("JAVA_HOME")
 if not java_home or not os.path.exists(java_home):
-    java_home = "C:\\Program Files\\Java\\jdk-21"
+    if is_win:
+        java_home = "C:\\Program Files\\Java\\jdk-21"
+    else:
+        java_home = ""
 
-java_bin = os.path.join(java_home, "bin")
-java_exe = os.path.join(java_bin, f"java{exe_ext}") if os.path.exists(os.path.join(java_bin, f"java{exe_ext}")) else (shutil.which(f"java{exe_ext}") or "java")
-javac = os.path.join(java_bin, f"javac{exe_ext}") if os.path.exists(os.path.join(java_bin, f"javac{exe_ext}")) else (shutil.which(f"javac{exe_ext}") or "javac")
-keytool = os.path.join(java_bin, f"keytool{exe_ext}") if os.path.exists(os.path.join(java_bin, f"keytool{exe_ext}")) else (shutil.which(f"keytool{exe_ext}") or "keytool")
-jar_exe = os.path.join(java_bin, f"jar{exe_ext}") if os.path.exists(os.path.join(java_bin, f"jar{exe_ext}")) else (shutil.which(f"jar{exe_ext}") or "jar")
+java_bin = os.path.join(java_home, "bin") if java_home else ""
+java_exe = os.path.join(java_bin, f"java{exe_ext}") if java_bin and os.path.exists(os.path.join(java_bin, f"java{exe_ext}")) else (shutil.which(f"java{exe_ext}") or "java")
+javac = os.path.join(java_bin, f"javac{exe_ext}") if java_bin and os.path.exists(os.path.join(java_bin, f"javac{exe_ext}")) else (shutil.which(f"javac{exe_ext}") or "javac")
+keytool = os.path.join(java_bin, f"keytool{exe_ext}") if java_bin and os.path.exists(os.path.join(java_bin, f"keytool{exe_ext}")) else (shutil.which(f"keytool{exe_ext}") or "keytool")
+jar_exe = os.path.join(java_bin, f"jar{exe_ext}") if java_bin and os.path.exists(os.path.join(java_bin, f"jar{exe_ext}")) else (shutil.which(f"jar{exe_ext}") or "jar")
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 workspace_root = os.path.dirname(base_dir)
@@ -331,6 +353,7 @@ shutil.copyfile(apk_universal, os.path.join(workspace_root, "Batman.apk"))
 
 # 9. Create App Bundle archive
 aab_path = os.path.join(workspace_root, "Batman-v1.0.0.aab")
+app_aab_path = os.path.join(base_dir, "Batman-v1.0.0.aab")
 with zipfile.ZipFile(aab_path, 'w', zipfile.ZIP_DEFLATED) as aab_zip:
     aab_zip.write(classes_dex, "base/dex/classes.dex")
     if os.path.exists(assets_dir):
@@ -347,6 +370,7 @@ with zipfile.ZipFile(aab_path, 'w', zipfile.ZIP_DEFLATED) as aab_zip:
                 rel_p = os.path.relpath(full_p, res_dir)
                 aab_zip.write(full_p, "base/res/" + rel_p.replace("\\", "/"))
 
+shutil.copyfile(aab_path, app_aab_path)
 print(f"Created App Bundle: {aab_path} ({os.path.getsize(aab_path):,} bytes)")
 
 print("\n" + "=" * 60)

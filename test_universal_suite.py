@@ -33,6 +33,8 @@ def run():
     ]
     for art in artifacts:
         p = os.path.join(base_dir, art)
+        if not os.path.exists(p):
+            p = os.path.join(app_dir, art)
         exists = os.path.exists(p)
         size = os.path.getsize(p) if exists else 0
         passed = exists and size > 200000
@@ -40,11 +42,19 @@ def run():
 
     # TEST 2: APK Signatures via apksigner
     sdk_root = os.environ.get("ANDROID_HOME") or os.environ.get("ANDROID_SDK_ROOT")
-    if not sdk_root:
-        app_data = os.environ.get("USERPROFILE", "")
-        sdk_root = os.path.join(app_data, "AppData", "Local", "Android", "Sdk")
-    build_tools_dir = os.path.join(sdk_root, "build-tools")
-    build_tools = os.path.join(build_tools_dir, "34.0.0")
+    if not sdk_root or not os.path.exists(sdk_root):
+        candidates = [
+            "/usr/local/lib/android/sdk",
+            os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local", "Android", "Sdk"),
+            os.path.expanduser("~/Android/Sdk"),
+        ]
+        for c in candidates:
+            if c and os.path.exists(c):
+                sdk_root = c
+                break
+
+    build_tools_dir = os.path.join(sdk_root, "build-tools") if sdk_root else ""
+    build_tools = os.path.join(build_tools_dir, "34.0.0") if build_tools_dir else ""
     if not os.path.exists(build_tools) and os.path.exists(build_tools_dir):
         versions = os.listdir(build_tools_dir)
         if versions:
@@ -53,16 +63,22 @@ def run():
     apksigner_jar = os.path.join(build_tools, "lib", "apksigner.jar")
 
     java_home = os.environ.get("JAVA_HOME")
-    if not java_home or not os.path.exists(java_home):
-        java_home = "C:\\Program Files\\Java\\jdk-21"
     is_win = os.name == 'nt'
     exe_ext = ".exe" if is_win else ""
-    java_exe = os.path.join(java_home, "bin", f"java{exe_ext}")
+    if not java_home or not os.path.exists(java_home):
+        if is_win:
+            java_home = "C:\\Program Files\\Java\\jdk-21"
+        else:
+            java_home = ""
+
+    java_exe = os.path.join(java_home, "bin", f"java{exe_ext}") if java_home and os.path.exists(os.path.join(java_home, "bin", f"java{exe_ext}")) else (shutil.which(f"java{exe_ext}") or "java")
     if not os.path.exists(java_exe):
         java_exe = "java"
     
     for apk_name in ["Batman-v1.0.0-universal.apk", "Batman-v1.0.0-arm32.apk", "Batman-v1.0.0-arm64.apk"]:
         apk_p = os.path.join(base_dir, apk_name)
+        if not os.path.exists(apk_p):
+            apk_p = os.path.join(app_dir, apk_name)
         res = subprocess.run([java_exe, "-jar", apksigner_jar, "verify", apk_p], capture_output=True, text=True)
         passed = (res.returncode == 0) and ("DOES NOT VERIFY" not in res.stderr)
         all_passed &= log_test(f"Signature Verification: {apk_name}", passed, "Cryptographic signature verified")
@@ -90,6 +106,8 @@ def run():
 
     # TEST 4: APK Internal Assets & Chunks
     universal_apk = os.path.join(base_dir, "Batman-v1.0.0-universal.apk")
+    if not os.path.exists(universal_apk):
+        universal_apk = os.path.join(app_dir, "Batman-v1.0.0-universal.apk")
     with zipfile.ZipFile(universal_apk, "r") as z:
         namelist = z.namelist()
         has_dex = "classes.dex" in namelist
@@ -113,7 +131,11 @@ def run():
 
     # TEST 5: Architecture Specificity
     arm32_apk = os.path.join(base_dir, "Batman-v1.0.0-arm32.apk")
+    if not os.path.exists(arm32_apk):
+        arm32_apk = os.path.join(app_dir, "Batman-v1.0.0-arm32.apk")
     arm64_apk = os.path.join(base_dir, "Batman-v1.0.0-arm64.apk")
+    if not os.path.exists(arm64_apk):
+        arm64_apk = os.path.join(app_dir, "Batman-v1.0.0-arm64.apk")
     with zipfile.ZipFile(arm32_apk, "r") as z32:
         has_arm32 = any(n.startswith("lib/armeabi-v7a/") for n in z32.namelist())
         all_passed &= log_test("ARM32 APK ABI Association", has_arm32)
