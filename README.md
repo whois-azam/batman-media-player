@@ -16,7 +16,6 @@ Normal browsers don't always handle video sites well. They lag, they freeze, and
 
 ## What it does
 
-- **Full-window browsing.** I removed the search bar from the top, so pages and menus start right at the edge of the screen.
 - **EXP PLAYER.** This is the built-in player, built on ExoPlayer. It picks the video out of the page and plays it while keeping your session cookies, User-Agent and origin headers, which helps avoid buffering issues and captchas.
 - **Pick your player.** Use EXP PLAYER (recommended) or the site's own player. You choose at first launch and can switch in Settings whenever.
 - **Seek jumps.** Rewind and fast-forward by 5s, 10s (default), 15s or 30s.
